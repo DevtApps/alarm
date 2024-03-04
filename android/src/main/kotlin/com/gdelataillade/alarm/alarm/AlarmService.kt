@@ -7,6 +7,7 @@ import com.gdelataillade.alarm.services.VolumeService
 import android.app.Service
 import android.app.PendingIntent
 import android.app.ForegroundServiceStartNotAllowedException
+import android.app.NotificationManager
 import android.content.Intent
 import android.content.Context
 import android.content.pm.ServiceInfo
@@ -77,21 +78,24 @@ class AlarmService : Service() {
         val pendingIntent = PendingIntent.getActivity(this, id!!, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notification = notificationHandler.buildNotification(notificationTitle!!, notificationBody!!, fullScreenIntent!!, pendingIntent)
+        val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
-        try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                startForeground(id, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
-            } else {
-                startForeground(id, notification)
-            }
-        } catch (e: ForegroundServiceStartNotAllowedException) {
-            // Specific handling for ForegroundServiceStartNotAllowedException
-            Log.e("AlarmService", "Foreground service start not allowed", e)
-        } catch (e: SecurityException) {
-            Log.e("AlarmService", "Security exception in starting foreground service", e)
-        } catch (e: Exception) {
-            Log.e("AlarmService", "Error in starting foreground service", e)
-        }
+        manager.notify(id, notification)
+//
+//        try {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+//                startForeground(id, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
+//            } else {
+//                startForeground(id, notification)
+//            }
+//        } catch (e: ForegroundServiceStartNotAllowedException) {
+//            // Specific handling for ForegroundServiceStartNotAllowedException
+//            Log.e("AlarmService", "Foreground service start not allowed", e)
+//        } catch (e: SecurityException) {
+//            Log.e("AlarmService", "Security exception in starting foreground service", e)
+//        } catch (e: Exception) {
+//            Log.e("AlarmService", "Error in starting foreground service", e)
+//        }
 
         try {
             if (channel != null) {

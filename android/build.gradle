@@ -11,6 +11,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:8.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
     }
 }
 
@@ -44,5 +45,9 @@ android {
 
     defaultConfig {
         minSdkVersion 19
+    }
+
+    dependencies {
+         //implementation files('/home/tiago/Programas/flutter/bin/cache/artifacts/engine/android-arm64-release/flutter.jar')
     }
 }

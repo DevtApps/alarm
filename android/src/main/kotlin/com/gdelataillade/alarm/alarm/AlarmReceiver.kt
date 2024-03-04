@@ -11,10 +11,10 @@ class AlarmReceiver : BroadcastReceiver() {
         val serviceIntent = Intent(context, AlarmService::class.java)
         serviceIntent.putExtras(intent)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            context.startForegroundService(serviceIntent)
-        } else {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            context.startForegroundService(serviceIntent)
+//        } else {
             context.startService(serviceIntent)
-        }
+//        }
     }
 }
